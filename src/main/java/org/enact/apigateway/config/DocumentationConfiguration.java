@@ -3,6 +3,7 @@ package org.enact.apigateway.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.SwaggerUiConfigParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
@@ -25,6 +26,9 @@ public class DocumentationConfiguration {
     @Autowired
     private RouteDefinitionLocator locator;
 
+    @Autowired
+    private SwaggerUiConfigParameters swaggerUiConfigParameters;
+
     @Bean
     public List<GroupedOpenApi> apis() {
         List<GroupedOpenApi> groups = new ArrayList<>();
@@ -34,6 +38,7 @@ public class DocumentationConfiguration {
             GroupedOpenApi api = GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").group(name).build();
 //            GroupedOpenApi api = GroupedOpenApi.builder().group(name).pathsToMatch("/**/" + name).build();
             groups.add(api);
+            swaggerUiConfigParameters.addGroup(name,name);
         });
         return groups;
     }

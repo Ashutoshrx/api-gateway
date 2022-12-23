@@ -2,6 +2,10 @@ package org.enact.apigateway.config;
 
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.models.ExternalDocumentation;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 import org.springdoc.core.GroupedOpenApi;
 import org.springdoc.core.SwaggerUiConfigParameters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,24 +40,11 @@ public class DocumentationConfiguration {
         definitions.stream().filter(routeDefinition -> routeDefinition.getId().matches(".*-service")).forEach(routeDefinition -> {
             String name = routeDefinition.getId().replaceAll("-service", "");
             GroupedOpenApi api = GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").group(name).build();
-//            GroupedOpenApi api = GroupedOpenApi.builder().group(name).pathsToMatch("/**/" + name).build();
             groups.add(api);
             swaggerUiConfigParameters.addGroup(name,name);
         });
         return groups;
     }
-    /*
-    @Bean
-    public GroupedOpenApi paymentApi() {
-        return GroupedOpenApi.builder().group("payment")
-                .pathsToMatch("/payment/**").build();
-    }
-    @Bean
-    public GroupedOpenApi userApi() {
-        return GroupedOpenApi.builder().group("users")
-                .pathsToMatch("/users/**").build();
-    }*/
-//
     //    https://springdoc.org/faq.html
 //    @Bean
 //    public OpenAPI springShopOpenAPI() {
